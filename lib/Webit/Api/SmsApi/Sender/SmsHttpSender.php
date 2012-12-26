@@ -1,8 +1,7 @@
 <?php
-use Webit\Api\SmsApi\Request\AbstractRequest;
-
 namespace Webit\Api\SmsApi\Sender;
 
+use Webit\Api\SmsApi\Request\AbstractRequest;
 use Webit\Api\SmsCommon\Error\Error;
 
 use Webit\Api\SmsApi\Request\SmsRequestFactoryInterface;
