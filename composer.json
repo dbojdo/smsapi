@@ -1,0 +1,23 @@
+{
+	"name" : "webit/smsapi",
+	"type": "library",
+	"description": "Web-IT SMSAPI implementation",
+	"keywords": ["web-it","smsapi"],
+	"homepage": "http://www.web-it.eu",
+	"license": "Web-IT",
+	"authors": [
+		{
+			"name": "Web-IT",
+			"homepage": "http://www.web-it.eu"
+		}
+	],
+	"require": {
+		"php": ">=5.3.2",
+		"webit/sms-common": "dev-master"
+	},
+	"autoload": {
+		"psr-0": {
+			"Webit\\Api\\SmsApi" : "lib/"
+		}
+	}
+}
