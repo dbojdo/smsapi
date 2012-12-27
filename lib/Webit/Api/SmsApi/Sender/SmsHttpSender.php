@@ -91,27 +91,27 @@ class SmsHttpSender implements SmsSenderInterface {
 			}
 		}
 		
-		$arCurlProp['to'] = $this->normalizeRecivers($request->getTo());
+		$arCurlProp['to'] = $this->normalizeRecipients($request->getTo());
 		
 		return $arCurlProp;
 	}
 	
 	/**
 	 * 
-	 * @param array $recivers
+	 * @param array $Recipients
 	 * @return string
 	 */
-	private function normalizeRecivers(array $recivers) {
-		$arRecivers = array();
-		foreach($recivers as $reciver) {
-			$phoneNo = $reciver->getPhoneNo();
+	private function normalizeRecipients(array $Recipients) {
+		$arRecipients = array();
+		foreach($Recipients as $Recipient) {
+			$phoneNo = $Recipient->getPhoneNo();
 			$phoneNo = preg_replace('/\D/','',$phoneNo);
-			$arRecivers[] = $phoneNo;
+			$arRecipients[] = $phoneNo;
 		}
 		
-		$arRecivers = array_unique($arRecivers);
+		$arRecipients = array_unique($arRecipients);
 		
-		return implode(',',$arRecivers);
+		return implode(',',$arRecipients);
 	}
 	
 	/**

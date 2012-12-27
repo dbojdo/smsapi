@@ -1,6 +1,6 @@
 <?php
 namespace Webit\Api\SmsApi\Request;
-use Webit\Api\SmsCommon\Message\ReciverInterface;
+use Webit\Api\SmsCommon\Message\RecipientInterface;
 
 abstract class AbstractRequest {
 	const METHOD_POST = 'post';
@@ -131,9 +131,9 @@ abstract class AbstractRequest {
 	
 	/**
 	 * 
-	 * @param ReciverInterface
+	 * @param RecipientInterface
 	 */
-	public function addTo(ReciverInterface $to) {
+	public function addTo(RecipientInterface $to) {
 		if (!in_array($to, $this->to)) {
 			$this->to[] = $to;
 		}

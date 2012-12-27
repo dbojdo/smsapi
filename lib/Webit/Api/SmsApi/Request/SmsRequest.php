@@ -330,8 +330,8 @@ class SmsRequest extends AbstractRequest {
 		$this->setEncoding($sms->getEncoding());
 		$this->setMessage($sms->getContent());
 		
-		foreach($sms->getRecivers() as $reciver) {
-			$this->addTo($reciver);
+		foreach($sms->getRecipients() as $Recipient) {
+			$this->addTo($Recipient);
 		}
 	}
 }
