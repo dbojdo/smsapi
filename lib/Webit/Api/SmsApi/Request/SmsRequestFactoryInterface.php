@@ -1,7 +1,7 @@
 <?php
 namespace Webit\Api\SmsApi\Request;
 
-class SmsRequestFactoryInterface {
+interface SmsRequestFactoryInterface {
 	/**
 	 * @return SmsRequest
 	 */
