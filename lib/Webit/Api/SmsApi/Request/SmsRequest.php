@@ -28,7 +28,7 @@ class SmsRequest extends AbstractRequest {
 	 * 
 	 * @var string
 	 */
-	protected $form;
+	protected $from;
 
 	/**
 	 * Message encoding. Default to: windows-1250 (it sucks!)
@@ -189,12 +189,12 @@ class SmsRequest extends AbstractRequest {
 		$this->message = $message;
 	}
 
-	public function getForm() {
-		return $this->form;
+	public function getFrom() {
+		return $this->from;
 	}
 
-	public function setForm($form) {
-		$this->form = $form;
+	public function setFrom($from) {
+		$this->from = $from;
 	}
 
 	public function getEncoding() {

@@ -6,6 +6,11 @@ abstract class AbstractRequest {
 	const METHOD_POST = 'post';
 	const METHOD_GET = 'get';
 	
+	const URL_HTTP = 'http://api.smsapi.pl/sms.do';
+	const URL_HTTP2 = 'http://api2.smsapi.pl/sms.do';
+	const URL_HTTPS = 'https://ssl.smsapi.pl/sms.do';
+	const URL_HTTPS2 = 'https://ssl2.smsapi.pl/sms.do';
+	
 	/**
 	 * 
 	 * @var string
@@ -31,7 +36,7 @@ abstract class AbstractRequest {
 	 * 
 	 * @var string
 	 */
-	protected $method = 'POST';
+	protected $method = self::METHOD_POST;
 	
 	/**
 	 * Phone no. Valid formats: 48xxxxxxxxx or xxxxxxxxx, ex. 48505602702 or 505602702
@@ -47,8 +52,8 @@ abstract class AbstractRequest {
 	 */
 	protected $group;
 
-	public function __construct($baseUrl = null, $username = null, $password = null) {
-		$this->baseUrl = $this->setBaseUrl(baseUrl);
+	public function __construct($username = null, $password = null) {
+		$this->baseUrl = self::URL_HTTP;
 		$this->username = $this->setUsername($username);
 		$this->password = $this->setPassword($password);
 	}

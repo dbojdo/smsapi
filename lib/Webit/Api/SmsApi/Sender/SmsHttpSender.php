@@ -1,14 +1,14 @@
 <?php
 namespace Webit\Api\SmsApi\Sender;
 
-use Webit\Api\SmsApi\Request\AbstractRequest;
+
 use Webit\Api\SmsCommon\Error\Error;
+use Webit\Api\SmsCommon\Message\SmsInterface;
+use Webit\Api\SmsCommon\Sender\SmsSenderInterface;
 
 use Webit\Api\SmsApi\Request\SmsRequestFactoryInterface;
-
-use Webit\Api\SmsCommon\Message\SmsInterface;
+use Webit\Api\SmsApi\Request\AbstractRequest;
 use Webit\Api\SmsApi\Request\SmsRequest;
-use Webit\Api\SmsApi\Sender\SmsSenderInterface;
 
 class SmsHttpSender implements SmsSenderInterface {	
 	/**
@@ -31,7 +31,9 @@ class SmsHttpSender implements SmsSenderInterface {
 		$request->fromSms($sms);
 		
 		$curl = $this->createCurl($request);
-		$response = curl_exec($curl);
+		$responseString = curl_exec($curl);
+		
+		$response = $this->parseResponse($responseString);
 		
 		return $response;
 	}
@@ -43,16 +45,19 @@ class SmsHttpSender implements SmsSenderInterface {
 	 */
 	private function createCurl(SmsRequest $request) {
 		$arCurlParams = $this->getCurlParameters($request);
+		
 		if($request->getMethod() == AbstractRequest::METHOD_POST) {
 			$curl = curl_init($request->getBaseUrl());
 			curl_setopt($curl, CURLOPT_POST, 1);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $arCurlParams);
 		} else {
-			
-			array_walk($arCurlParams, function(&$value) {
-				urlencode($value);
+			array_walk($arCurlParams, function(&$value,$key) {
+				$value = $key.'='.urlencode($value);
 			});
+			
 			$strParams = implode('&',$arCurlParams);
+			$url = $request->getBaseUrl().'?'.$strParams;
+			
 			$curl = curl_init($request->getBaseUrl().'?'.$strParams);
 		}
 		
@@ -68,11 +73,12 @@ class SmsHttpSender implements SmsSenderInterface {
 		
 		$arCurlProp = array();
 		foreach($arProperties as $property) {
-			if(in_array($property->getName()),$arOmmit) {
+			if(in_array($property->getName(),$arOmmit)) {
 				continue;
 			};
-				
-			$value = $property->getValue($obj);
+			
+			$property->setAccessible(true);
+			$value = $property->getValue($request);
 			if($value !== null) {
 				$key = $this->camelToUnderscore($property->getName());
 				switch(true) {
@@ -99,7 +105,7 @@ class SmsHttpSender implements SmsSenderInterface {
 		$arRecivers = array();
 		foreach($recivers as $reciver) {
 			$phoneNo = $reciver->getPhoneNo();
-			$phoneNo = preg_replace('\D','',$phoneNo);
+			$phoneNo = preg_replace('/\D/','',$phoneNo);
 			$arRecivers[] = $phoneNo;
 		}
 		
