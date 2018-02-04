@@ -4,7 +4,7 @@
 	"description": "Web-IT SMSAPI implementation",
 	"keywords": ["web-it","smsapi"],
 	"homepage": "http://www.web-it.eu",
-	"license": "Web-IT",
+	"license": "MIT",
 	"authors": [
 		{
 			"name": "Web-IT",
